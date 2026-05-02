@@ -1,0 +1,25 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 코드 가져오기
+      uses: actions/checkout@v3
+
+    - name: Docker 로그인
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Docker 이미지 빌드
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/my-nginx:latest .
+
+    - name: Docker Hub로 Push
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/my-nginx:latest
