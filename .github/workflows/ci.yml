@@ -1,0 +1,19 @@
+name: Docker Build CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 코드 가져오기
+      uses: actions/checkout@v3
+
+    - name: Docker 설치 확인
+      run: docker --version
+
+    - name: Docker 이미지 빌드
+      run: docker build -t my-nginx .
